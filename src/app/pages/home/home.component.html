@@ -1,0 +1,41 @@
+<h1>Feed</h1>
+<hr />
+
+<div *ngIf = "user" class="tweet-form">
+  <form (submit)="sendTweet()">
+    <div class="form-control">
+      <label for="text">Enter Tweet
+        <textarea
+         type="text"
+          id="text" 
+          name="text" 
+          placeholder="What do you want to tweet?"
+          cols="120"
+          rows="5"
+          [(ngModel)] ="text"
+          >
+        </textarea>
+      </label>
+    </div>
+    <button [disabled]="isFormLoading"  class="btn" type="submit">
+      {{ isFormLoading ? 'Sending....' : 'Tweet'}}
+    </button>
+  </form>
+</div>
+
+
+<div>
+  <div *ngIf="tweets; else loading">
+    <a
+      *ngFor="let tweet of tweets"
+      class="tweet-card"
+      [routerLink]="'/tweet/'+ tweet.id"
+    >
+    <app-tweet-card [tweet]="tweet"></app-tweet-card>
+    </a>
+  </div>
+
+  <ng-template #loading>
+    <h2>...Loading Tweets</h2>
+  </ng-template>
+</div>

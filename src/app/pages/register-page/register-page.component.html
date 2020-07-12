@@ -1,0 +1,35 @@
+<div class="card">
+    <form (submit) ="register()">
+        <div class="form-control">
+            <label for="username">
+                Username
+                <input [(ngModel)] = "form.username" name="username" id="username" type="text">
+            </label>
+        </div>
+
+            <div class="form-control">
+                <label for="email">
+                    Email
+                    <input [(ngModel)] = "form.email" name="email" id="email" type="text">
+                </label>
+            </div>
+
+            <div class="form-control">
+                <label for="password">
+                    Password
+                    <input [(ngModel)] = "form.password" name="password" id="password" type="password">
+                </label>
+            </div>
+
+            <div class="form-control">
+                <label for="confirm-password">
+                    Confirm Password
+                    <input [(ngModel)] = "form.confirmPassword" name="confirm-password" id="confirm-password" type="password">
+                </label>
+            </div>
+        <div class="form-actions">
+            <button class="btn" type="submit" [disabled] ="isLoading"> 
+            {{ isLoading ?  'Loading...' : 'Register'}} </button>
+        </div>
+    </form>
+</div>

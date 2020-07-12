@@ -1,0 +1,47 @@
+<div *ngIf="tweet; else loading">
+  <app-tweet-card [tweet]="tweet"></app-tweet-card>
+
+
+
+  <div>
+    <form *ngIf = "user" (submit)="sendComment()">
+      <div class="form-control">
+        <label for="text">Enter Comment
+          <textarea
+           type="text"
+            id="text" 
+            name="text" 
+            placeholder="Do you have a comment?"
+            cols="120"
+            rows="5"
+            [(ngModel)] ="text"
+            >
+          </textarea>
+        </label>
+      </div>
+      <button [disabled] = "isFormLoading"  class="btn" type="submit">
+        {{ isFormLoading ? 'Comment....' : 'Comment'}}
+      </button>
+    </form>
+  </div>
+
+
+
+
+  <div *ngIf="comments; else loadingComments" class="comments-wrapper">
+    <app-tweet-card
+      *ngFor="let comment of comments"
+      [comment]="comment"
+      [tweet]="tweet"
+    >
+    </app-tweet-card>
+  </div>
+
+  <ng-template #loadingComments>
+    <h2>...Loading comments</h2>
+  </ng-template>
+</div>
+
+<ng-template #loading>
+  <h1>Loading Tweet</h1>
+</ng-template>

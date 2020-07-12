@@ -1,0 +1,23 @@
+<div *ngIf="comment; else tweetLayout" class="tweet-card">
+  <p><small>Replying to: {{tweet.user.username}} </small></p>
+  <p>
+    <strong>{{ comment.user.username }} |</strong>
+    <small> {{ comment.user.email }} </small>
+  </p>
+  <hr />
+  <p>{{ comment.text }}</p>
+  <small> {{ comment.created_at | date: "dd/MM/yyyy" }} </small>
+</div>
+
+<ng-template #tweetLayout>
+  <div class="tweet-card">
+    <p>
+      <strong>{{ tweet.user.username }} |</strong>
+      <small> {{ tweet.user.email }} </small>
+    </p>
+    <hr />
+    <p>{{ tweet.text }}</p>
+    <small> {{ tweet.created_at | date: "dd/MM/yyyy" }} </small>
+  </div>
+</ng-template>
+

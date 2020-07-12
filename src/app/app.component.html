@@ -1,0 +1,21 @@
+<nav class="nav-bar">
+    <a routerLink="/" class="app-logo">Auth App</a>
+    
+   <div *ngIf ="!user; else userMenu" class="nav-links">
+    <a routerLink="/login" class="nav-link">Login</a>
+    <a routerLink="/register" class="nav-link">Register</a>
+   </div>
+
+   <ng-template #userMenu>
+    <div>
+        Hello , {{user.username | titlecase}}
+
+        <a (click)="logout()" href="#" class="nav-link">Logout</a>
+    </div>
+   </ng-template>
+
+</nav>
+
+<div class="container">
+    <router-outlet></router-outlet>
+</div>
