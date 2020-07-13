@@ -1,23 +1,29 @@
 <div *ngIf="comment; else tweetLayout" class="tweet-card">
-  <p><small>Replying to: {{tweet.user.username}} </small></p>
-  <p>
-    <strong>{{ comment.user.username }} |</strong>
-    <small> {{ comment.user.email }} </small>
-  </p>
+  <div class="tweet-reply"><small>Replying to: {{tweet.user.username}} </small></div>
+  <div class="tweet-header">
+    <img class="avatar-img" [src]="avatarImg" alt="">
+    <p class="tweet-username">{{ comment.user.username }} </p>
+    <span class="tweet-email"> {{ comment.user.email }} </span>
+  </div>
   <hr />
-  <p>{{ comment.text }}</p>
-  <small> {{ comment.created_at | date: "dd/MM/yyyy" }} </small>
+ <div class="tweet-content">
+  <p class="tweet-text">{{ comment.text }}</p>
+ <p class="tweet-date"> {{ comment.created_at | date: "dd/MM/yyyy" }} </p>
+ </div>
 </div>
 
 <ng-template #tweetLayout>
   <div class="tweet-card">
-    <p>
-      <strong>{{ tweet.user.username }} |</strong>
-      <small> {{ tweet.user.email }} </small>
-    </p>
+    <div class="tweet-header">
+      <img class="avatar-img" [src]="avatarImg" alt="">
+      <p class="tweet-username">{{ tweet.user.username }}</p>
+    <span class="tweet-email"> {{ tweet.user.email }} </span>
+    </div>
     <hr />
-    <p>{{ tweet.text }}</p>
-    <small> {{ tweet.created_at | date: "dd/MM/yyyy" }} </small>
+   <div class="tweet-content">
+    <p class="tweet-text">{{ tweet.text }}</p>
+    <p class="tweet-date"> {{ tweet.created_at | date: "dd/MM/yyyy" }} </p>
+   </div>
   </div>
 </ng-template>
 

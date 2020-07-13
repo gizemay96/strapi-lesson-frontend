@@ -33,6 +33,7 @@ export class LoginPageComponent implements OnInit {
       
       this.authService.setToken(response.jwt);
       this.userService.setUser(response.user);
+      this.userService.getUserDetails()
 
       this.isLoading = false;
 

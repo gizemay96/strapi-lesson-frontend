@@ -1,0 +1,26 @@
+hr {
+    margin: 15px 0
+}
+
+.profile-card {
+    box-shadow: 0 0 4px slategray;
+    padding: 20px;
+
+    .profile-img{
+        width: 200px;
+        height: 200px;
+        margin: auto;
+        display: block;
+        border-radius: 50%;
+        box-shadow: 0 0 4px slategray;
+        object-fit: contain;
+    }
+
+    .text-center{
+        text-align: center;
+    }
+
+    .file-input{
+        display: none;
+    }
+}

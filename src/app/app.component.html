@@ -7,10 +7,12 @@
    </div>
 
    <ng-template #userMenu>
-    <div>
-        Hello , {{user.username | titlecase}}
-
-        <a (click)="logout()" href="#" class="nav-link">Logout</a>
+    <div class="nav-menu">
+        <img [src]="user.profileImgURL || 'assets/avatar-placeholder.png'" alt="" class="avatar-img">
+        <span>Hello,</span>
+          {{user.username | titlecase}}
+          <a routerLink="/profile" class="nav-link">Profile</a>
+         <a (click)="logout()" href="#" class="nav-link">Logout</a>
     </div>
    </ng-template>
 

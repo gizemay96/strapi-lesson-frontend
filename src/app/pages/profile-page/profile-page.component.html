@@ -1,0 +1,11 @@
+<h1>My Profile</h1>
+<hr>
+<div class="profile-card" *ngIf = "user">
+    <img class="profile-img" [src]="fileUrl || profileImg" alt="">
+    <p *ngIf="selectedFile" class="text-center"> {{ selectedFile.name }} </p>
+    <div class="text-center">
+        <input (change)="selectFile($event)" class="file-input" type="file" #fileInput>
+        <button (click)="fileInput.click()" class="btn">Upload Image</button>
+        <button *ngIf = "selectedFile" (click)="saveImg()" class="btn"> Save </button>
+    </div>
+</div>

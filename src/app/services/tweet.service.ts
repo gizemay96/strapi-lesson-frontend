@@ -3,12 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Tweet } from '../types/tweet.type';
 import { Observable } from 'rxjs';
 import { UserService } from './user.service';
+import { environment as env } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TweetService {
-  baseUrl = 'http://localhost:1337/tweets';
   private tweets:Tweet[];
 
   constructor(
@@ -17,12 +17,12 @@ export class TweetService {
   ) { }
 
   fetchTweets(): void {
-    this.http.get(`${this.baseUrl}?_sort=created_at:DESC`)
+    this.http.get(`${env.tweetsApiURL}?_sort=created_at:DESC`)
     .subscribe((response:Tweet[]) => this.tweets = response)
   }
 
   fetchTweet(tweetId:number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${tweetId}`)
+    return this.http.get(`${env.tweetsApiURL}/${tweetId}`)
   }
 
   getTweets():Tweet[] {
@@ -37,7 +37,7 @@ export class TweetService {
     }
 
 
-   return this.http.post(this.baseUrl,newTweet,{
+   return this.http.post(env.tweetsApiURL,newTweet,{
       headers: {
         Authorization: `Bearer ${token}`
       }

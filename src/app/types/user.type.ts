@@ -9,5 +9,7 @@ export type User = {
   provider: string //'local';
   role: object,
   updated_at?: string, //'2020-07-05T09:03:54.129Z';
-  username: string //'Secrettum';
+  username: string, //'Secrettum';
+  profileImgURL?:string,
+  profileImg:any
 };
