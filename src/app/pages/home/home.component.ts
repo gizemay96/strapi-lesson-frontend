@@ -9,6 +9,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  selectedFiles = false;
   text: string = '';
   fileList = [];
   imgList = [];
@@ -66,6 +67,7 @@ export class HomeComponent implements OnInit {
   }
 
   selectFiles(event) {
+    console.log('this.fileList');
     this.fileList = Array.from(event.target.files);
     console.log(this.fileList);
 
@@ -76,6 +78,15 @@ export class HomeComponent implements OnInit {
 
       reader.readAsDataURL(file);
     });
+    this.selectedFiles = true
     console.log(this.imgList);
+  }
+
+  deleteImageList() {
+    this.selectedFiles = false;
+    this.fileList = [];
+    this.imgList = [];
+    console.log(this.fileList)
+    console.log(this.imgList)
   }
 }

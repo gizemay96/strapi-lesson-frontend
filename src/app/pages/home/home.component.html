@@ -22,12 +22,14 @@
        *ngFor="let img of imgList"
         [src]="img" 
         alt="">
-    </div>
-    <input class="file-input" type="file" (change)="selectFiles($event)" multiple #imgUpload />
-    <button [disabled]="isFormLoading"  class="btn" type="submit">
-      {{ isFormLoading ? 'Sending....' : 'Tweet'}}
-    </button>
-    <button class="btn" type="button" (click)="imgUpload.click()">Upload Image</button>
+      </div>
+      <input onclick="value = null" class="file-input" type="file" (change)="selectFiles($event)" multiple #imgUpload />
+      <button [disabled]="isFormLoading"  class="btn" type="submit">
+        {{ isFormLoading ? 'Sending....' : 'Tweet'}}
+      </button>
+      <button *ngIf="!selectedFiles" class="btn" type="button" (click)="imgUpload.click()">Upload Image</button>
+      <button *ngIf="selectedFiles" (click) = "imgUpload.click($event)" class="btn" type="button">Add More..</button>
+      <button *ngIf="selectedFiles" (click) = "deleteImageList()" class="btn" type="button">Delete Files</button>
   </form>
 </div>
 
