@@ -48,4 +48,17 @@
     margin-bottom: 15px;
     color: rgb(145, 145, 145);
   }
+
+  .tweet-images{
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 4px;
+    overflow: hidden;
+    .tweet-image{
+      display: block;
+      width: 50%;
+      height: 200px;
+      object-fit: cover;
+    }
+  }
 }

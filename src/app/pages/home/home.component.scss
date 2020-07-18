@@ -4,3 +4,19 @@
     border: 1px solid slategray;
     padding: 20px;
 }
+
+.file-input{
+    display: none;
+}
+
+.preview-images{
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 4px;
+    overflow: hidden;
+    .preview-image{
+        width: 50%;
+        height: 200px;
+        object-fit: cover;
+    }
+}

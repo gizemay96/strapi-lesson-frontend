@@ -9,3 +9,13 @@
         <button *ngIf = "selectedFile" (click)="saveImg()" class="btn"> Save </button>
     </div>
 </div>
+
+
+<hr>
+
+<div *ngIf="myTweets">
+    <app-tweet-card
+    *ngFor="let tweet of myTweets"
+    [tweet] = "tweet"
+    ></app-tweet-card>
+</div>

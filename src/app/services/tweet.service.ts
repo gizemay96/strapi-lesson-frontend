@@ -1,47 +1,66 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Tweet } from '../types/tweet.type';
+import { User } from '../types/user.type';
 import { Observable } from 'rxjs';
-import { UserService } from './user.service';
 import { environment as env } from '../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TweetService {
-  private tweets:Tweet[];
+  private tweets: Tweet[];
 
-  constructor(
-    private http: HttpClient,
-    private userService: UserService,
-  ) { }
+  constructor(private http: HttpClient) { }
 
   fetchTweets(): void {
-    this.http.get(`${env.tweetsApiURL}?_sort=created_at:DESC`)
-    .subscribe((response:Tweet[]) => this.tweets = response)
+    this.http
+      .get(`${env.tweetsApiURL}?_sort=created_at:DESC`)
+      .subscribe((response: Tweet[]) => (this.tweets = response));
   }
 
-  fetchTweet(tweetId:number): Observable<any> {
-    return this.http.get(`${env.tweetsApiURL}/${tweetId}`)
+  fetchUserTweets(id: number): Observable<any> {
+    return this.http.get(
+      `${env.tweetsApiURL}?user=${id}&&_sort=created_at:DESC`
+    );
   }
 
-  getTweets():Tweet[] {
+  fetchTweet(tweetId: number): Observable<any> {
+    return this.http.get(`${env.tweetsApiURL}/${tweetId}`);
+  }
+
+  // sendTweetText(token, text: string, images: number[], user: User) {}
+
+  getTweets(): Tweet[] {
     return this.tweets;
   }
 
-  sendTweet(text:string) {
+  uploadImages(fileList) {
     const token = window.localStorage.getItem('token');
-    const newTweet = {
-      text: text,
-      user: this.userService.getUser().id
-    }
+    const formData = new FormData();
 
-
-   return this.http.post(env.tweetsApiURL,newTweet,{
+    fileList.forEach((file) => {
+      formData.append('files', file);
+    });
+    return this.http.post(env.uploadApiURL, formData, {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
+        Authorization: `Bearer ${token}`,
+      },
+    });
   }
 
+  sendTweet(text: string, user: User, fileList: number[] = []): Observable<any> {
+    const token = window.localStorage.getItem('token');
+    const newTweet: Tweet = {
+      text: text,
+      user: user,
+      image: fileList,
+    };
+
+    return this.http.post(env.tweetsApiURL, newTweet, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
 }

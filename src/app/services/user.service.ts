@@ -2,14 +2,21 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../types/user.type';
 import { environment as env } from '../../environments/environment';
+import { TweetService } from './tweet.service';
+import { Tweet } from '../types/tweet.type';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
   private user: User;
+  private userTweets: Tweet[];
 
-  constructor(private http: HttpClient) {}
+  constructor
+  (
+    private http: HttpClient,
+    private tweetService: TweetService,
+    ) {}
 
   setUser(user: User = null) {
     this.user = user;
@@ -17,6 +24,10 @@ export class UserService {
 
   getUser() {
     return this.user;
+  }
+
+  getMyTweets(){
+    return this.userTweets;
   }
 
   tryToLogin() {
@@ -35,6 +46,7 @@ export class UserService {
         this.user = response;
 
         this.getUserDetails();
+        this.fetcMyTweets();
       });
   }
 
@@ -59,16 +71,16 @@ export class UserService {
       });
   }
 
+  fetcMyTweets() {
+    this.tweetService.fetchUserTweets(this.user.id)
+    .subscribe(response => this.userTweets = response)
+  }
+
   saveImg(file, url) {
-    const id = this.user.id.toString();
     const token = window.localStorage.getItem('token');
     const form = new FormData();
 
     form.append('files', file);
-    // form.append('refId', id);
-    // form.append('ref','user');
-    // form.append('field', 'profileImg');
-
     return this.http.post(env.uploadApiURL, form, {
       headers: {
         Authorization: `Bearer ${token}`,

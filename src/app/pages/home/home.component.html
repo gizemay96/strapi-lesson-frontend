@@ -17,9 +17,17 @@
         </textarea>
       </label>
     </div>
+    <div class="preview-images" *ngIf ="fileList">
+      <img class="preview-image"
+       *ngFor="let img of imgList"
+        [src]="img" 
+        alt="">
+    </div>
+    <input class="file-input" type="file" (change)="selectFiles($event)" multiple #imgUpload />
     <button [disabled]="isFormLoading"  class="btn" type="submit">
       {{ isFormLoading ? 'Sending....' : 'Tweet'}}
     </button>
+    <button class="btn" type="button" (click)="imgUpload.click()">Upload Image</button>
   </form>
 </div>
 
