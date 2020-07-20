@@ -56,4 +56,15 @@ export class ProfilePageComponent implements OnInit {
         })
       )
   }
+
+  likeTweet(myLike,tweetId){
+    this.tweetService.toggleLike(myLike , tweetId , this.user.id)
+    .subscribe(response => {
+      this.userService.fetcMyTweets()  
+    })
+  }
+
+  retweet(){
+    console.log('retweet');
+  }
 }

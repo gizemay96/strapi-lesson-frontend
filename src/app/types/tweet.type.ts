@@ -1,5 +1,6 @@
 import { User } from './user.type';
 import { Comment } from './comment.type';
+import { Like } from './like.type';
 
 export type Tweet = {
     id?:number,
@@ -9,5 +10,6 @@ export type Tweet = {
     created_at?: string,
     updated_at?: string,
     comments?: Comment,
+    likes?:Like[];
 
 }

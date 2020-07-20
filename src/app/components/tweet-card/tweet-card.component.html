@@ -29,6 +29,29 @@
        [src]="'http://localhost:1337'+ img.url" 
        alt="">
     </div>
+    <div class="tweet-actions">
+      <div>
+        <button 
+        (click)="onLike.emit(likeByMe)" 
+        [ngClass]="{'btn-danger': likeByMe}"
+        class="btn icon">
+          <i class="far fa-heart"></i>
+          <span *ngIf="tweet.likes.length">
+            {{tweet.likes.length}}
+          </span>
+        </button>
+        <button 
+        (click)="onRetweet.emit()"
+        class="btn icon">
+          <i class="fas fa-retweet"></i>
+        </button>
+        <button
+        [routerLink]="'/tweet/' + tweet.id"
+         class="btn icon">
+          <i class="far fa-comment"></i>
+        </button>
+      </div>
+    </div>
     <p class="tweet-date"> {{ tweet.created_at | date: "dd/MM/yyyy" }} </p>
    </div>
   </div>

@@ -50,5 +50,17 @@ export class TweetDetailComponent implements OnInit {
     })
   }
 
+  likeTweet(myLike){
+    this.tweetService.toggleLike(myLike , this.tweet.id , this.user.id)
+    .subscribe((response) => {
+       this.tweetService.fetchTweet(this.tweet.id)
+          .subscribe((response) => this.tweet = response);
+      });
+  }
+
+  retweet() {
+    console.log('retweet')
+  }
+
 
 }

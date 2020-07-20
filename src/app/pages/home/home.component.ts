@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TweetService } from '../../services/tweet.service';
 import { Tweet } from '../../types/tweet.type';
 import { UserService } from 'src/app/services/user.service';
+import { LikeService } from 'src/app/services/like.service';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +19,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private tweetService: TweetService,
-    private userService: UserService
+    private userService: UserService,
+    private likeService: LikeService
   ) {}
 
   ngOnInit(): void {
@@ -32,11 +34,19 @@ export class HomeComponent implements OnInit {
     return this.tweetService.getTweets();
   }
 
+  // get isLikedByMe() {
+  //   return (tweetId) => {
+  //     const theTweet = this.tweets.find((tweet) => tweet.id === tweetId);
+
+  //     return theTweet.likes.find((like) => like.user === this.user.id);
+  //   };
+  // }
+
   sendTweet() {
     this.isFormLoading = true;
 
     if (!(this.fileList && this.fileList.length)) {
-       this.tweetService
+      this.tweetService
         .sendTweet(this.text, this.user)
         .subscribe((response) => {
           console.log('complete !!', response);
@@ -48,11 +58,13 @@ export class HomeComponent implements OnInit {
           this.tweetService.fetchTweets();
         });
     } else {
-      this.tweetService.uploadImages(this.fileList)
+      this.tweetService
+        .uploadImages(this.fileList)
         .subscribe((response: any[]) => {
           const uploadedFileIds = response.map((file) => file.id);
 
-          this.tweetService.sendTweet(this.text, this.user, uploadedFileIds)
+          this.tweetService
+            .sendTweet(this.text, this.user, uploadedFileIds)
             .subscribe((response) => {
               console.log('complete !!', response);
 
@@ -67,9 +79,7 @@ export class HomeComponent implements OnInit {
   }
 
   selectFiles(event) {
-    console.log('this.fileList');
     this.fileList = Array.from(event.target.files);
-    console.log(this.fileList);
 
     this.fileList.forEach((file) => {
       const reader = new FileReader();
@@ -78,15 +88,24 @@ export class HomeComponent implements OnInit {
 
       reader.readAsDataURL(file);
     });
-    this.selectedFiles = true
-    console.log(this.imgList);
+    this.selectedFiles = true;
   }
 
   deleteImageList() {
     this.selectedFiles = false;
     this.fileList = [];
     this.imgList = [];
-    console.log(this.fileList)
-    console.log(this.imgList)
+  }
+
+  likeTweet(myLike , tweetId:number) {
+    this.tweetService.toggleLike(myLike , tweetId , this.user.id)
+    .subscribe((response) => {
+       this.tweetService.fetchTweet(tweetId)
+          .subscribe((response) => this.tweetService.setTweet(response));
+      });
+  }
+
+  retweet(tweetId:number) {
+    console.log('retweet', tweetId)
   }
 }

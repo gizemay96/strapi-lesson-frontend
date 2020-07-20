@@ -16,6 +16,9 @@
 <div *ngIf="myTweets">
     <app-tweet-card
     *ngFor="let tweet of myTweets"
+    (onLike)="likeTweet($event , tweet.id)"
+    (onRetweet)="retweet()"
+    [me] ="user"
     [tweet] = "tweet"
     ></app-tweet-card>
 </div>

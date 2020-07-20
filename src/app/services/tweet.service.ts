@@ -4,6 +4,7 @@ import { Tweet } from '../types/tweet.type';
 import { User } from '../types/user.type';
 import { Observable } from 'rxjs';
 import { environment as env } from '../../environments/environment';
+import { LikeService } from './like.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,10 @@ import { environment as env } from '../../environments/environment';
 export class TweetService {
   private tweets: Tweet[];
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private likeService: LikeService,
+    ) { }
 
   fetchTweets(): void {
     this.http
@@ -27,6 +31,13 @@ export class TweetService {
 
   fetchTweet(tweetId: number): Observable<any> {
     return this.http.get(`${env.tweetsApiURL}/${tweetId}`);
+  }
+
+  setTweet(updatedTweet){
+   const tweetIndex = this.tweets.findIndex(t => t.id === updatedTweet.id)
+
+   this.tweets.splice(tweetIndex,1,updatedTweet)
+
   }
 
   // sendTweetText(token, text: string, images: number[], user: User) {}
@@ -62,5 +73,13 @@ export class TweetService {
         Authorization: `Bearer ${token}`,
       },
     });
+  }
+
+  toggleLike(myLike , tweetId , userId){
+    if (myLike) {
+     return this.likeService.dislikeTweet(myLike.id)
+    } else {
+     return this.likeService.likeTweet(tweetId, userId)
+  }
   }
 }

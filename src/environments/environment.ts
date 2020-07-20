@@ -12,6 +12,7 @@ export const environment = {
   commentsApiURL: `${baseURL}/comments`,
   tweetsApiURL: `${baseURL}/tweets`,
   uploadApiURL: `${baseURL}/upload`,
+  likeApiURL: `${baseURL}/likes`,
 };
 
 /*

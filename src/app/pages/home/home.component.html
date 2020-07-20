@@ -1,48 +1,82 @@
 <h1>Feed</h1>
 <hr />
 
-<div *ngIf = "user" class="tweet-form">
+<div *ngIf="user" class="tweet-form">
   <form (submit)="sendTweet()">
     <div class="form-control">
-      <label for="text">Enter Tweet
+      <label for="text"
+        >Enter Tweet
         <textarea
-         type="text"
-          id="text" 
-          name="text" 
+          type="text"
+          id="text"
+          name="text"
           placeholder="What do you want to tweet?"
           cols="120"
           rows="5"
-          [(ngModel)] ="text"
-          >
+          [(ngModel)]="text"
+        >
         </textarea>
       </label>
     </div>
-    <div class="preview-images" *ngIf ="fileList">
-      <img class="preview-image"
-       *ngFor="let img of imgList"
-        [src]="img" 
-        alt="">
-      </div>
-      <input onclick="value = null" class="file-input" type="file" (change)="selectFiles($event)" multiple #imgUpload />
-      <button [disabled]="isFormLoading"  class="btn" type="submit">
-        {{ isFormLoading ? 'Sending....' : 'Tweet'}}
+    <div class="preview-images" *ngIf="fileList">
+      <img
+        class="preview-image"
+        *ngFor="let img of imgList"
+        [src]="img"
+        alt=""
+      />
+    </div>
+    <div class="actions">
+      <input
+        onclick="value = null"
+        class="file-input"
+        type="file"
+        (change)="selectFiles($event)"
+        multiple
+        #imgUpload
+      />
+      <button
+        *ngIf="!selectedFiles"
+        class="btn icon"
+        type="button"
+        (click)="imgUpload.click()"
+      >
+        <i class="far fa-images"></i>
       </button>
-      <button *ngIf="!selectedFiles" class="btn" type="button" (click)="imgUpload.click()">Upload Image</button>
-      <button *ngIf="selectedFiles" (click) = "imgUpload.click($event)" class="btn" type="button">Add More..</button>
-      <button *ngIf="selectedFiles" (click) = "deleteImageList()" class="btn" type="button">Delete Files</button>
+      <button
+        *ngIf="selectedFiles"
+        (click)="imgUpload.click($event)"
+        class="btn btn-secondary icon"
+        type="button"
+      >
+        <i class="fas fa-plus-circle"></i>
+      </button>
+      <button
+        *ngIf="selectedFiles"
+        (click)="deleteImageList()"
+        class="btn btn-danger icon"
+        type="button"
+      >
+        <i class="far fa-trash-alt"></i>
+      </button>
+      <button [disabled]="isFormLoading" class="btn" type="submit">
+        {{ isFormLoading ? "Sending...." : "Tweet" }}
+      </button>
+    </div>
   </form>
 </div>
 
-
 <div>
   <div *ngIf="tweets; else loading">
-    <a
-      *ngFor="let tweet of tweets"
-      class="tweet-card"
-      [routerLink]="'/tweet/'+ tweet.id"
+    <app-tweet-card
+    *ngFor="let tweet of tweets"
+    [tweet]="tweet"
+    (onLike)="likeTweet($event , tweet.id)"
+    (onRetweet)="retweet(tweet.id)"
+    [me]="user"
     >
-    <app-tweet-card [tweet]="tweet"></app-tweet-card>
-    </a>
+    </app-tweet-card>
+
   </div>
 
   <ng-template #loading>
