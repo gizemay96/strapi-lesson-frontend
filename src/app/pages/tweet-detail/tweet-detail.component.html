@@ -1,42 +1,43 @@
 <div *ngIf="tweet; else loading">
-  <app-tweet-card 
-  (onLike) ="likeTweet($event)"
-  (onRetweet) ="retweet()"
-  [me]="user"
-  [tweet]="tweet"></app-tweet-card>
-
-
+  <app-tweet-card
+    (onLike)="likeTweet($event)"
+    (onRetweet)="retweet()"
+    [me]="user"
+    [tweet]="tweet"
+  >
+  </app-tweet-card>
 
   <div>
-    <form *ngIf = "user" (submit)="sendComment()">
+    <form *ngIf="user" (submit)="sendComment()">
       <div class="form-control">
-        <label for="text">Enter Comment
+        <label for="text"
+          >Enter Comment
           <textarea
-           type="text"
-            id="text" 
-            name="text" 
+            type="text"
+            id="text"
+            name="text"
             placeholder="Do you have a comment?"
             cols="120"
             rows="5"
-            [(ngModel)] ="text"
-            >
+            [(ngModel)]="text"
+          >
           </textarea>
         </label>
       </div>
-      <button [disabled] = "isFormLoading"  class="btn" type="submit">
-        {{ isFormLoading ? 'Comment....' : 'Comment'}}
+      <button [disabled]="isFormLoading" class="btn" type="submit">
+        {{ isFormLoading ? "Comment...." : "Comment" }}
       </button>
     </form>
   </div>
-
-
-
 
   <div *ngIf="comments; else loadingComments" class="comments-wrapper">
     <app-tweet-card
       *ngFor="let comment of comments"
       [comment]="comment"
       [tweet]="tweet"
+      (onLike)="likeComment($event, comment.id)"
+      (onRetweet)="reComment()"
+      [me]="user"
     >
     </app-tweet-card>
   </div>

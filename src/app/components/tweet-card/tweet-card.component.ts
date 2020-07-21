@@ -35,6 +35,12 @@ export class TweetCardComponent implements OnInit {
     }
   }
 
+  get likeByMeComment(){
+    if (this.me){
+      return this.comment.likes.find(comment => comment.user === this.me.id)
+    }
+  }
+
    
   constructor() { }
 

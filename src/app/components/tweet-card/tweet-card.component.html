@@ -1,59 +1,75 @@
 <div *ngIf="comment; else tweetLayout" class="tweet-card">
-  <div class="tweet-reply"><small>Replying to: {{tweet.user.username}} </small></div>
+  <div class="tweet-reply">
+    <small>Replying to: {{ tweet.user.username }} </small>
+  </div>
   <div class="tweet-header">
-    <img class="avatar-img" [src]="avatarImg" alt="">
-    <p class="tweet-username">{{ comment.user.username }} </p>
+    <img class="avatar-img" [src]="avatarImg" alt="" />
+    <p class="tweet-username">{{ comment.user.username }}</p>
     <span class="tweet-email"> {{ comment.user.email }} </span>
   </div>
   <hr />
- <div class="tweet-content">
-  <p class="tweet-text">{{ comment.text }}</p>
- <p class="tweet-date"> {{ comment.created_at | date: "dd/MM/yyyy" }} </p>
- </div>
+  <div class="tweet-content">
+    <p class="tweet-text">{{ comment.text }}</p>
+    <div class="tweet-actions">
+      <div>
+        <button
+          (click)="onLike.emit(likeByMeComment)"
+          [ngClass]="{ 'btn-danger': likeByMeComment }"
+          class="btn icon"
+        >
+          <i class="far fa-heart"></i>
+          <span *ngIf="comment.likes.length">
+            {{ comment.likes.length }}
+          </span>
+        </button>
+        <button (click)="onRetweet.emit()" class="btn icon">
+          <i class="fas fa-retweet"></i>
+        </button>
+      </div>
+    </div>
+    <p class="tweet-date">{{ comment.created_at | date: "dd/MM/yyyy" }}</p>
+  </div>
 </div>
 
 <ng-template #tweetLayout>
   <div class="tweet-card">
     <div class="tweet-header">
-      <img class="avatar-img" [src]="avatarImg" alt="">
+      <img class="avatar-img" [src]="avatarImg" alt="" />
       <p class="tweet-username">{{ tweet.user.username }}</p>
-    <span class="tweet-email"> {{ tweet.user.email }} </span>
+      <span class="tweet-email"> {{ tweet.user.email }} </span>
     </div>
     <hr />
-   <div class="tweet-content">
-    <p class="tweet-text">{{ tweet.text }}</p>
-    <div  class="tweet-images" *ngIf ="tweet.image">
-      <img
-       class="tweet-image"
-       *ngFor = "let img of tweet.image" 
-       [src]="'http://localhost:1337'+ img.url" 
-       alt="">
-    </div>
-    <div class="tweet-actions">
-      <div>
-        <button 
-        (click)="onLike.emit(likeByMe)" 
-        [ngClass]="{'btn-danger': likeByMe}"
-        class="btn icon">
-          <i class="far fa-heart"></i>
-          <span *ngIf="tweet.likes.length">
-            {{tweet.likes.length}}
-          </span>
-        </button>
-        <button 
-        (click)="onRetweet.emit()"
-        class="btn icon">
-          <i class="fas fa-retweet"></i>
-        </button>
-        <button
-        [routerLink]="'/tweet/' + tweet.id"
-         class="btn icon">
-          <i class="far fa-comment"></i>
-        </button>
+    <div class="tweet-content">
+      <p class="tweet-text">{{ tweet.text }}</p>
+      <div class="tweet-images" *ngIf="tweet.image">
+        <img
+          class="tweet-image"
+          *ngFor="let img of tweet.image"
+          [src]="'http://localhost:1337' + img.url"
+          alt=""
+        />
       </div>
+      <div class="tweet-actions">
+        <div>
+          <button
+            (click)="onLike.emit(likeByMe)"
+            [ngClass]="{ 'btn-danger': likeByMe }"
+            class="btn icon"
+          >
+            <i class="far fa-heart"></i>
+            <span *ngIf="tweet.likes.length">
+              {{ tweet.likes.length }}
+            </span>
+          </button>
+          <button (click)="onRetweet.emit()" class="btn icon">
+            <i class="fas fa-retweet"></i>
+          </button>
+          <button [routerLink]="'/tweet/' + tweet.id" class="btn icon">
+            <i class="far fa-comment"></i>
+          </button>
+        </div>
+      </div>
+      <p class="tweet-date">{{ tweet.created_at | date: "dd/MM/yyyy" }}</p>
     </div>
-    <p class="tweet-date"> {{ tweet.created_at | date: "dd/MM/yyyy" }} </p>
-   </div>
   </div>
 </ng-template>
-
